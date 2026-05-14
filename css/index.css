@@ -1,0 +1,171 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* Estilo base del body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.hero {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #ff3e3e;
+    color: white;
+    border-bottom: 5px solid black;
+}
+
+.search-container {
+    margin-top: 20px;
+    position: relative;
+    display: inline-block;
+    
+}
+
+.search-input {
+    padding: 10px 40px 10px 15px;
+    border-radius: 20px;
+    border: none;
+    width: 250px;
+    outline: none;
+    
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.main-content {
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-section {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
+   
+}
+
+.filter-dropdown {
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    
+}
+
+.pokemon-grid {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-left: 200px;
+    margin-right: 200px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+}
+
+.types-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 8px;
+
+}
+
+.type-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.75rem;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+.pokemon-block {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 15px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.pokemon-block:hover {
+    transform: scale(1.05);
+}
+
+/* 1. Reset básico y contenedor principal */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+nav {
+    flex-grow: 1; /* Hace que el nav ocupe el espacio disponible entre el logo y el final */
+    display: flex;
+    justify-content: center; /* ESTO CENTRA LOS ELEMENTOS HIJOS */
+}
+
+/* 2. El logo y el título juntos */
+.logo-container {
+    width: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-right-space {
+    width: 30px;
+}
+
+.logo-container h1 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* 3. La lista de navegación */
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 30px; /* Espacio entre enlaces */
+}
+
+/* 4. Estilo de los enlaces */
+.nav-links a {
+    text-decoration: none;
+    color: #666;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+/* Efecto al pasar el ratón */
+.nav-links a:hover, .nav-links a.active {
+    color: #e3350d; /* Rojo tipo Pokédex */
+}

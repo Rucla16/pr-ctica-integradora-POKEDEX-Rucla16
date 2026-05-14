@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéDex - Cercador</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="https://img.icons8.com/color/48/pokeball--v1.png" alt="Pokeball">
+            <h1>PokéDex</h1>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Inici</a></li>
+                <li><a href="my_pokemons.html">Els meus Pokémon</a></li>
+                <li><a href="hunt.html">Caça</a></li>
+                <li><a href="battle.html">Batalla</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Pokédex</h2>
+            <div class="search-container">
+                <img src="https://img.icons8.com/material-outlined/24/000000/search--v1.png" class="search-icon"
+                    alt="Lupa">
+                <input type="text" id="pkmSearchInput" class="search-input" placeholder="Busca el teu Pokémon...">
+            </div>
+        </section>
+
+        <section class="main-content">
+            <div class="filter-section">
+                <div class="filter-dropdown">
+                    Filtres: Tipus i generacions
+                    <img src="https://img.icons8.com/material-outlined/16/000000/chevron-down.png" alt="Chevron">
+                </div>
+            </div>
+
+            <div class="pokemon-grid" id="mainPkmGrid">
+            </div>
+        </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>
