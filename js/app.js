@@ -1,16 +1,61 @@
-import { getPokemon } from "./api.js";
-import * as UI from "./ui.js";
-import * as db from "./storage.js";
+import * as API from './api.js';
+import * as UI from './ui.js';
+import * as db from './storage.js';
 
-const init = async () => {
-    const favorites = db.getFavorites();
-    //UI.renderFavorites(favorites);
+const typeColors = {
+    grass: "#78C850", fire: "#F08030", water: "#6890F0", bug: "#A8B820",
+    normal: "#A8A878", poison: "#A040A0", electric: "#F8D030", ground: "#E0C068",
+    fairy: "#EE99AC", fighting: "#C03028", psychic: "#F85888", rock: "#B8A038",
+    ghost: "#705898", ice: "#98D8D8", dragon: "#7038F8", flying: "#A890F0",
+    steel: "#B8B8D0", dark: "#705848"
 };
 
-document.querySelector("#search-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const dades = await getPokemon(e.target.pokemonName.value);
-    document.querySelector("#pokedex-vessel").appendChild(UI.createCard(dades));
-});
+// Lógica para la Home
+export const initIndex = async () => {
+    const grid = document.getElementById("mainPkmGrid");
+    const searchInput = document.getElementById("pkmSearchInput");
 
-init();
+    // Cargar los 151 originales
+    for (let i = 1; i <= 151; i++) {
+        const pokemon = await API.getPokemon(i);
+        const card = UI.createPokemonCard(pokemon, typeColors);
+        grid.appendChild(card);
+    }
+
+    // Buscador
+    searchInput.addEventListener('input', (e) => {
+        const text = e.target.value.toLowerCase();
+        document.querySelectorAll('.pokemon-block').forEach(card => {
+            const name = card.querySelector('.name').textContent.toLowerCase();
+            const id = card.querySelector('p').textContent;
+            card.style.display = (name.includes(text) || id.includes(text)) ? "flex" : "none";
+        });
+    });
+};
+
+// Lógica para Detalles
+export const initDetails = async (id) => {
+    try {
+        const pokemon = await API.getPokemon(id);
+        const speciesRes = await fetch(pokemon.species.url);
+        const speciesData = await speciesRes.json();
+        const evoRes = await fetch(speciesData.evolution_chain.url);
+        const evoData = await evoRes.json();
+
+        // Llamamos a la función de UI
+        UI.renderDetails(pokemon, evoData, typeColors);
+    } catch (error) {
+        console.error("Error en details:", error);
+    }
+};
+
+// Lógica para Favoritos
+export const initFavorites = () => {
+    const container = document.getElementById("MyPokemons");
+    const favorites = db.getFavorites();
+    favorites.forEach(async (name) => {
+        const pokemon = await API.getPokemon(name);
+        const card = UI.createPokemonCard(pokemon, typeColors);
+        container.appendChild(card);
+    });
+};

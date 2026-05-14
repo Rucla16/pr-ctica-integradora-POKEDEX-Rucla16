@@ -1,0 +1,41 @@
+.details-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas ajustadas */
+    gap: 40px;
+    padding: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.stat-bar-bg {
+    background: #eee;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.stat-bar-fill {
+    background: #ff3e3e; /* Rojo Pokédex */
+    height: 100%;
+    transition: width 0.5s ease;
+}
+
+.evo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+.arrow { color: #ccc; font-size: 1.5rem; }

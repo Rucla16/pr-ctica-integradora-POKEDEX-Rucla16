@@ -1,6 +1,6 @@
-const BASE_USR = "https://pokeapi.co/api/v2/pokemon/";
+export const BASE_USR = "https://pokeapi.co/api/v2/pokemon/";
 
-const getPokemon = async (name) => {
+export const getPokemon = async (name) => {
     try {
         const response = await fetch(`${BASE_USR}${name}`);
         if (!response.ok) {
