@@ -1,4 +1,5 @@
 export const createPokemonCard = (pokemon, typeColors) => {
+    // 1. Crear el contenedor principal de la tarjeta
     const carta = document.createElement('div');
     carta.classList.add('pokemon-block');
     
@@ -6,24 +7,59 @@ export const createPokemonCard = (pokemon, typeColors) => {
         window.location.href = `details.html?id=${pokemon.id}`;
     });
 
-    const typeTags = pokemon.types.map(typeInfo => {
-        const name = typeInfo.type.name;
-        return `<span class="type-badge" style="background-color: ${typeColors[name] || '#777'}">${name}</span>`;
-    }).join('');
+    // 2. Contenedor de la imagen
+    const imgContainer = document.createElement('div');
+    imgContainer.classList.add('img-container');
 
-    carta.innerHTML = `
-        <div class="img-container">
-            <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
-        </div>
-        <p>#${pokemon.id.toString().padStart(3, '0')}</p>
-        <p class="name">${pokemon.name}</p>
-        <div class="types-container">${typeTags}</div>
-        <button class="btn-fav" onclick="event.stopPropagation();">⭐</button>
-    `;
+    const img = document.createElement('img');
+    img.src = pokemon.sprites.front_default;
+    img.alt = pokemon.name;
+    imgContainer.appendChild(img);
+
+    // 3. Número del Pokémon (ej: #001)
+    const numero = document.createElement('p');
+    numero.textContent = `#${pokemon.id.toString().padStart(3, '0')}`;
+
+    // 4. Nombre del Pokémon
+    const name = document.createElement('p');
+    name.classList.add('name');
+    name.textContent = pokemon.name;
+
+    // 5. Contenedor de Tipos
+    const typesContainer = document.createElement('div');
+    typesContainer.classList.add('types-container');
+
+    pokemon.types.forEach(typeInfo => {
+        const typeName = typeInfo.type.name;
+        const typeBadge = document.createElement('span');
+        typeBadge.classList.add('type-badge');
+        typeBadge.style.backgroundColor = typeColors[typeName] || '#777';
+        typeBadge.textContent = typeName;
+        typesContainer.appendChild(typeBadge);
+    });
+
+    // 6. Botón de Favoritos
+    const btnFav = document.createElement('button');
+    btnFav.classList.add('btn-fav');
+    btnFav.textContent = "⭐";
+    // Usamos stopPropagation para que al pulsar la estrella no se abra la página de detalles
+    btnFav.addEventListener("click", (event) => {
+        event.stopPropagation();
+        // Aquí iría tu lógica para guardar en storage.js
+        console.log(`${pokemon.name} añadido a favoritos`);
+    });
+
+    // 7. Ensamblar todas las piezas en la carta
+    carta.appendChild(imgContainer);
+    carta.appendChild(numero);
+    carta.appendChild(name);
+    carta.appendChild(typesContainer);
+    carta.appendChild(btnFav);
+
     return carta;
 };
 
-export const renderDetails = (pokemon, evoData, typeColors) => {
+export const renderDetails = (pokemon, evoSprites, typeColors) => {
     const container = document.getElementById("pokemonDetail");
     container.textContent = ""; // Limpiamos el contenedor de forma segura
 
@@ -33,6 +69,9 @@ export const renderDetails = (pokemon, evoData, typeColors) => {
     // --- COLUMNA IZQUIERDA ---
     const leftCol = document.createElement("div");
     leftCol.classList.add("left-column");
+
+    const cardProfile = document.createElement("div");
+    cardProfile.classList.add("card", "profile-card");
 
     const img = document.createElement("img");
     img.src = pokemon.sprites.other['official-artwork'].front_default;
@@ -52,7 +91,8 @@ export const renderDetails = (pokemon, evoData, typeColors) => {
         typesRow.appendChild(span);
     });
 
-    leftCol.append(img, name, typesRow);
+    cardProfile.append(img, name, typesRow);
+    leftCol.append(cardProfile);
 
     // --- COLUMNA DERECHA ---
     const rightCol = document.createElement("div");
@@ -92,38 +132,99 @@ export const renderDetails = (pokemon, evoData, typeColors) => {
     });
     cardSkills.append(h3Skills, ulSkills);
 
-    // 3. Card de Evoluciones
-    const cardEvo = document.createElement("div");
+    const cardEvo = document.createElement("div"); // <--- IMPORTANTE: Debe tener el 'const'
     cardEvo.classList.add("card");
+
     const h3Evo = document.createElement("h3");
     h3Evo.textContent = "Cadena Evolutiva";
+
     const evoContainer = document.createElement("div");
     evoContainer.classList.add("evo-container");
 
-    let evolutions = [];
-    let current = evoData.chain;
-    while (current) {
-        evolutions.push(current.species.name);
-        current = current.evolves_to[0];
-    }
+    evoSprites.forEach((evo, i) => {
+        const evoItem = document.createElement("div");
+        evoItem.classList.add("evo-item");
+        evoItem.onclick = () => window.location.href = `details.html?id=${evo.name}`;
 
-    evolutions.forEach((evoName, i) => {
-        const spanName = document.createElement("span");
-        spanName.classList.add("evo-name");
-        spanName.textContent = evoName;
-        evoContainer.appendChild(spanName);
+        const imgEvo = document.createElement("img");
+        imgEvo.src = evo.sprite;
+        imgEvo.classList.add("evo-sprite");
 
-        if (i < evolutions.length - 1) {
+        const pName = document.createElement("p");
+        pName.textContent = evo.name;
+        pName.classList.add("evo-name-label");
+
+        evoItem.append(imgEvo, pName);
+        evoContainer.appendChild(evoItem);
+
+        if (i < evoSprites.length - 1) {
             const arrow = document.createElement("span");
             arrow.classList.add("arrow");
             arrow.textContent = "→";
             evoContainer.appendChild(arrow);
         }
     });
-    cardEvo.append(h3Evo, evoContainer);
 
+    // Ahora unimos todo
+    cardEvo.append(h3Evo, evoContainer); 
+    rightCol.appendChild(cardEvo); // <--- Aquí se añade a la columna derecha
+    
+    // Al final de todo:
+    wrapper.append(leftCol, rightCol);
+    container.appendChild(wrapper);
     // Ensamblaje final
     rightCol.append(cardStats, cardSkills, cardEvo);
     wrapper.append(leftCol, rightCol);
     container.appendChild(wrapper);
+
+    // --- DENTRO DE renderDetails, en la columna derecha ---
+
+    // 4. Card de Movimientos (Los 10 primeros)
+    const cardMoves = document.createElement("div");
+    cardMoves.classList.add("card");
+
+    const h3Moves = document.createElement("h3");
+    h3Moves.textContent = "Primeros 10 Movimientos";
+
+    // Creamos una tabla para que se vea ordenado
+    const table = document.createElement("table");
+    table.classList.add("moves-table");
+
+    // Cabecera de la tabla
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+    ["Movimiento", "Nivel"].forEach(text => {
+        const th = document.createElement("th");
+        th.textContent = text;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Cuerpo de la tabla (Limitamos a los 10 primeros)
+    const tbody = document.createElement("tbody");
+    const primerosMovimientos = pokemon.moves.slice(0, 10);
+
+    primerosMovimientos.forEach(m => {
+        const row = document.createElement("tr");
+
+        const cellName = document.createElement("td");
+        cellName.textContent = m.move.name.replace("-", " "); // Limpiamos el nombre
+        cellName.style.textTransform = "capitalize";
+
+        const cellLevel = document.createElement("td");
+        // Buscamos el nivel en el que se aprende (versión red/blue o la primera disponible)
+        const level = m.version_group_details[0].level_learned_at;
+        cellLevel.textContent = level === 0 ? "MT/Evol" : `Lvl ${level}`;
+
+        row.appendChild(cellName);
+        row.appendChild(cellLevel);
+        tbody.appendChild(row);
+    });
+
+    table.appendChild(tbody);
+    cardMoves.append(h3Moves, table);
+
+    // NO OLVIDES añadirlo al final de la columna derecha
+    rightCol.appendChild(cardMoves);
 };

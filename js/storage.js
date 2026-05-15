@@ -5,14 +5,15 @@ export const getFavorites = () => {
     return favorites ? JSON.parse(favorites) : [];
 };
 
-export const saveFavorite = (name) => {
+
+export const saveFavorite = (pokemonName) => {
     const favorites = getFavorites();
-    if (!favorites.includes(name)) {
-        favorites.push(name);
+    if (!favorites.includes(pokemonName)) {
+        favorites.push(pokemonName);
         localStorage.setItem(KEY, JSON.stringify(favorites));
+        console.log(`${pokemonName} guardado en My Pokemons`);
     }
 };
-
 export const removeFavorite = (name) => {
     const favorite = getFavorites().filter(p => p.name !== name);
     localStorage.setItem(KEY, JSON.stringify(favorite));

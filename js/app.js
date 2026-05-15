@@ -34,16 +34,21 @@ export const initIndex = async () => {
 };
 
 // Lógica para Detalles
+// Busca tu función initDetails y déjala así:
 export const initDetails = async (id) => {
     try {
+        // 1. Obtenemos el pokemon base
         const pokemon = await API.getPokemon(id);
-        const speciesRes = await fetch(pokemon.species.url);
-        const speciesData = await speciesRes.json();
-        const evoRes = await fetch(speciesData.evolution_chain.url);
-        const evoData = await evoRes.json();
+        
+        // 2. Obtenemos la lista de nombres de su línea evolutiva
+        const evoNames = await API.getEvolutionChain(pokemon);
+        
+        // 3. Obtenemos los objetos {name, sprite} de esos nombres (ESTO ES LO QUE FALTABA)
+        const evoSprites = await API.getPokemonSprites(evoNames);
 
-        // Llamamos a la función de UI
-        UI.renderDetails(pokemon, evoData, typeColors);
+        // 4. Ahora sí, evoSprites existe y se puede pasar a UI
+        UI.renderDetails(pokemon, evoSprites, typeColors);
+        
     } catch (error) {
         console.error("Error en details:", error);
     }
