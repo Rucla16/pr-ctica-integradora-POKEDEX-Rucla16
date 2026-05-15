@@ -268,8 +268,6 @@ export const createHuntAlert = (pokemon, x, y) => {
     card.addEventListener("click", (event) => {
         event.stopPropagation();
 
-        db.saveFavorite(pokemon.name);
-
         window.location.href = `battle.html?wildId=${pokemon.id}`;
     });
 

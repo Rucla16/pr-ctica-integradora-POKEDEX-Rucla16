@@ -10,11 +10,43 @@
 
 <body>
     <header>
-        <h1>Batalles Pokémon</h1>
+        <div class="logo-container">
+            <img src="https://img.icons8.com/color/48/pokeball--v1.png" alt="Pokeball">
+            <h1>PokéDex</h1>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Inici</a></li>
+                <li><a href="my_pokemons.html">Els meus Pokémon</a></li>
+                <li><a href="hunt.html">Caça</a></li>
+                <li><a href="battle.html">Batalla</a></li>
+            </ul>
+        </nav>
     </header>
+    <main id="battle-arena" class="battle-screen">
+        <div class="poke-container wild-side">
+            <div class="status-box">
+                <span id="wild-name" class="poke-name">---</span>
+                <div class="hp-bar-bg"><div id="wild-hp" class="hp-bar-fill"></div></div>
+                <span id="wild-hp-text">100/100</span>
+            </div>
+            <img id="wild-img" class="battle-sprite" src="" alt="Wild Pokemon">
+        </div>
 
-    <main id="Battles">
+        <div class="poke-container player-side">
+            <img id="player-img" class="battle-sprite back-sprite" src="" alt="My Pokemon">
+            <div class="status-box">
+                <span id="player-name" class="poke-name">---</span>
+                <div class="hp-bar-bg"><div id="player-hp" class="hp-bar-fill"></div></div>
+                <span id="player-hp-text">100/100</span>
+            </div>
+        </div>
 
+        <div class="battle-menu">
+            <div id="battle-text" class="battle-message">¡Elije un ataque!</div>
+            <div id="actions-panel" class="actions-grid">
+                </div>
+        </div>
     </main>
 
     <script type="module" src="js/main.js"></script>
