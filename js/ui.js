@@ -227,3 +227,51 @@ export const renderDetails = (pokemon, evoSprites, typeColors) => {
     
     rightCol.appendChild(cardMoves);
 };
+
+export const createHuntAlert = (pokemon, x, y) => {
+    const card = document.createElement("div");
+    card.classList.add("wild-encounter-card");
+
+    
+    const cardWidth = 180;
+    const cardHeight = 200;
+    let posX = x - cardWidth / 2;
+    let posY = y - cardHeight / 2;
+
+    
+    if (posX < 10) posX = 10;
+    if (posX + cardWidth > window.innerWidth) posX = window.innerWidth - cardWidth - 10;
+    if (posY < 10) posY = 10;
+    if (posY + cardHeight > window.innerHeight) posY = window.innerHeight - cardHeight - 10;
+
+    card.style.left = `${posX}px`;
+    card.style.top = `${posY}px`;
+
+    
+    const img = document.createElement("img");
+    img.src = pokemon.sprites.other['official-artwork'].front_default;
+    img.classList.add("pokemon-silhouette");
+
+    
+    const msg = document.createElement("p");
+    msg.classList.add("encounter-text");
+    msg.textContent = "¡POKÉMON SALVAJE!";
+
+    const instruction = document.createElement("p");
+    instruction.textContent = "Haz clic para ATACAR";
+    instruction.style.fontSize = "0.7rem";
+    instruction.style.color = "#666";
+
+    card.append(img, msg, instruction);
+
+    
+    card.addEventListener("click", (event) => {
+        event.stopPropagation();
+
+        db.saveFavorite(pokemon.name);
+        
+        window.location.href = `battle.html?wildId=${pokemon.id}`;
+    });
+
+    return card;
+};

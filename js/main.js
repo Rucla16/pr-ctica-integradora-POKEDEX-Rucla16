@@ -12,5 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (id) App.initDetails(id);
     } else if (path.includes("my_pokemons.html")) {
         App.initFavorites();
+    } else if (path.includes("hunt.html")) {
+        App.initHunt();
     }
 });

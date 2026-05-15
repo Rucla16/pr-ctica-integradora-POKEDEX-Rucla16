@@ -63,3 +63,37 @@ export const initFavorites = () => {
         container.appendChild(card);
     });
 };
+
+export const initHunt = () => {
+    const huntZone = document.getElementById("hunt-zone");
+
+    huntZone.addEventListener("click", async (e) => {
+        
+        if (document.querySelector(".wild-encounter-card")) {
+            
+            document.querySelector(".wild-encounter-card").remove();
+            return;
+        }
+
+    
+        const luck = Math.random();
+        if (luck < 0.6) { 
+            console.log("No has encontrado nada esta vez...");
+        
+            return; 
+        }
+
+        
+        const randomId = Math.floor(Math.random() * 151) + 1;
+        try {
+            const pokemon = await API.getPokemon(randomId);
+
+            
+            
+            const encounterCard = UI.createHuntAlert(pokemon, e.clientX, e.clientY);
+            huntZone.appendChild(encounterCard);
+        } catch (error) {
+            console.error("Error en la caza:", error);
+        }
+    });
+};
