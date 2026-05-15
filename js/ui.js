@@ -1,5 +1,7 @@
+import * as db from './storage.js';
+
 export const createPokemonCard = (pokemon, typeColors) => {
-    // 1. Crear el contenedor principal de la tarjeta
+    
     const carta = document.createElement('div');
     carta.classList.add('pokemon-block');
     
@@ -7,7 +9,7 @@ export const createPokemonCard = (pokemon, typeColors) => {
         window.location.href = `details.html?id=${pokemon.id}`;
     });
 
-    // 2. Contenedor de la imagen
+    
     const imgContainer = document.createElement('div');
     imgContainer.classList.add('img-container');
 
@@ -16,16 +18,16 @@ export const createPokemonCard = (pokemon, typeColors) => {
     img.alt = pokemon.name;
     imgContainer.appendChild(img);
 
-    // 3. Número del Pokémon (ej: #001)
+    
     const numero = document.createElement('p');
     numero.textContent = `#${pokemon.id.toString().padStart(3, '0')}`;
 
-    // 4. Nombre del Pokémon
+    
     const name = document.createElement('p');
     name.classList.add('name');
     name.textContent = pokemon.name;
 
-    // 5. Contenedor de Tipos
+    
     const typesContainer = document.createElement('div');
     typesContainer.classList.add('types-container');
 
@@ -38,18 +40,18 @@ export const createPokemonCard = (pokemon, typeColors) => {
         typesContainer.appendChild(typeBadge);
     });
 
-    // 6. Botón de Favoritos
+    
     const btnFav = document.createElement('button');
     btnFav.classList.add('btn-fav');
     btnFav.textContent = "⭐";
-    // Usamos stopPropagation para que al pulsar la estrella no se abra la página de detalles
+   
     btnFav.addEventListener("click", (event) => {
         event.stopPropagation();
-        // Aquí iría tu lógica para guardar en storage.js
+        
         console.log(`${pokemon.name} añadido a favoritos`);
     });
 
-    // 7. Ensamblar todas las piezas en la carta
+    
     carta.appendChild(imgContainer);
     carta.appendChild(numero);
     carta.appendChild(name);
@@ -61,12 +63,11 @@ export const createPokemonCard = (pokemon, typeColors) => {
 
 export const renderDetails = (pokemon, evoSprites, typeColors) => {
     const container = document.getElementById("pokemonDetail");
-    container.textContent = ""; // Limpiamos el contenedor de forma segura
-
+    container.textContent = ""; 
     const wrapper = document.createElement("div");
     wrapper.classList.add("details-wrapper");
 
-    // --- COLUMNA IZQUIERDA ---
+    
     const leftCol = document.createElement("div");
     leftCol.classList.add("left-column");
 
@@ -94,11 +95,11 @@ export const renderDetails = (pokemon, evoSprites, typeColors) => {
     cardProfile.append(img, name, typesRow);
     leftCol.append(cardProfile);
 
-    // --- COLUMNA DERECHA ---
+    
     const rightCol = document.createElement("div");
     rightCol.classList.add("right-column");
 
-    // 1. Card de Poder (Media)
+    
     const cardStats = document.createElement("div");
     cardStats.classList.add("card");
     const h3Stats = document.createElement("h3");
@@ -118,7 +119,7 @@ export const renderDetails = (pokemon, evoSprites, typeColors) => {
     pStats.textContent = `${Math.round(avg)} pts`;
     cardStats.append(h3Stats, barBg, pStats);
 
-    // 2. Card de Habilidades
+    
     const cardSkills = document.createElement("div");
     cardSkills.classList.add("card");
     const h3Skills = document.createElement("h3");
@@ -132,7 +133,7 @@ export const renderDetails = (pokemon, evoSprites, typeColors) => {
     });
     cardSkills.append(h3Skills, ulSkills);
 
-    const cardEvo = document.createElement("div"); // <--- IMPORTANTE: Debe tener el 'const'
+    const cardEvo = document.createElement("div");
     cardEvo.classList.add("card");
 
     const h3Evo = document.createElement("h3");
@@ -165,32 +166,30 @@ export const renderDetails = (pokemon, evoSprites, typeColors) => {
         }
     });
 
-    // Ahora unimos todo
+   
     cardEvo.append(h3Evo, evoContainer); 
-    rightCol.appendChild(cardEvo); // <--- Aquí se añade a la columna derecha
+    rightCol.appendChild(cardEvo); 
     
-    // Al final de todo:
+    
     wrapper.append(leftCol, rightCol);
     container.appendChild(wrapper);
-    // Ensamblaje final
+    
     rightCol.append(cardStats, cardSkills, cardEvo);
     wrapper.append(leftCol, rightCol);
     container.appendChild(wrapper);
 
-    // --- DENTRO DE renderDetails, en la columna derecha ---
-
-    // 4. Card de Movimientos (Los 10 primeros)
+   
     const cardMoves = document.createElement("div");
     cardMoves.classList.add("card");
 
     const h3Moves = document.createElement("h3");
     h3Moves.textContent = "Primeros 10 Movimientos";
 
-    // Creamos una tabla para que se vea ordenado
+    
     const table = document.createElement("table");
     table.classList.add("moves-table");
 
-    // Cabecera de la tabla
+    
     const thead = document.createElement("thead");
     const headerRow = document.createElement("tr");
     ["Movimiento", "Nivel"].forEach(text => {
@@ -201,7 +200,7 @@ export const renderDetails = (pokemon, evoSprites, typeColors) => {
     thead.appendChild(headerRow);
     table.appendChild(thead);
 
-    // Cuerpo de la tabla (Limitamos a los 10 primeros)
+    
     const tbody = document.createElement("tbody");
     const primerosMovimientos = pokemon.moves.slice(0, 10);
 
@@ -209,11 +208,11 @@ export const renderDetails = (pokemon, evoSprites, typeColors) => {
         const row = document.createElement("tr");
 
         const cellName = document.createElement("td");
-        cellName.textContent = m.move.name.replace("-", " "); // Limpiamos el nombre
+        cellName.textContent = m.move.name.replace("-", " "); 
         cellName.style.textTransform = "capitalize";
 
         const cellLevel = document.createElement("td");
-        // Buscamos el nivel en el que se aprende (versión red/blue o la primera disponible)
+        
         const level = m.version_group_details[0].level_learned_at;
         cellLevel.textContent = level === 0 ? "MT/Evol" : `Lvl ${level}`;
 
@@ -225,6 +224,6 @@ export const renderDetails = (pokemon, evoSprites, typeColors) => {
     table.appendChild(tbody);
     cardMoves.append(h3Moves, table);
 
-    // NO OLVIDES añadirlo al final de la columna derecha
+    
     rightCol.appendChild(cardMoves);
 };

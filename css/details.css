@@ -8,12 +8,12 @@ header {
 }
 
 nav {
-    flex-grow: 1; /* Hace que el nav ocupe el espacio disponible entre el logo y el final */
+    flex-grow: 1; 
     display: flex;
-    justify-content: center; /* ESTO CENTRA LOS ELEMENTOS HIJOS */
+    justify-content: center; 
 }
 
-/* 2. El logo y el título juntos */
+
 .logo-container {
     width: 30px;
     display: flex;
@@ -30,16 +30,16 @@ nav {
     color: #333;
 }
 
-/* 3. La lista de navegación */
+
 .nav-links {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 30px; /* Espacio entre enlaces */
+    gap: 30px;
 }
 
-/* 4. Estilo de los enlaces */
+
 .nav-links a {
     text-decoration: none;
     color: #666;
@@ -47,40 +47,40 @@ nav {
     transition: color 0.3s ease;
 }
 
-/* Efecto al pasar el ratón */
+
 .nav-links a:hover, .nav-links a.active {
-    color: #e3350d; /* Rojo tipo Pokédex */
+    color: #e3350d; 
 }
-/* Contenedor principal flexible */
+
 .details-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1.5fr; /* La derecha es un poco más ancha */
+    grid-template-columns: 1fr 1.5fr; 
     gap: 20px;
     max-width: 1100px;
     margin: 20px auto;
-    align-items: start; /* Alinea las cajas al techo */
+    align-items: start; 
 }
 
-/* Estilo unificado para todas las "cajitas" */
+
 .card {
     background: white;
-    border: 1px solid #e0e0e0; /* Un borde sutil para definir la sección */
+    border: 1px solid #e0e0e0; 
     border-radius: 12px;
     padding: 20px;
-    height: 100%; /* Obliga a la caja a estirarse si es necesario */
+    height: 100%; 
     box-shadow: 0 2px 8px rgba(0,0.10,0.15,0.20);
     display: flex;
     flex-direction: column;
 }
 
-/* Ajuste específico para la columna izquierda */
+
 .profile-card {
 
     height: 899px;
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: 100%; /* Para que mida lo mismo que la suma de las de la derecha */
+    min-height: 100%; 
 }
 
 .profile-card img {
@@ -88,20 +88,20 @@ nav {
     height: 600px;
 }
 
-/* Control de la tabla de movimientos */
+
 .moves-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: auto; /* Empuja la tabla hacia abajo si hay espacio */
+    margin-top: auto; 
 }
 
-/* Si la tabla es muy larga, limitamos su altura con scroll */
+
 .card:has(.moves-table) {
     max-height: 400px; 
     overflow-y: auto;
 }
 
-/* Estilo de los títulos de las secciones */
+
 .card h3 {
     margin-bottom: 15px;
     padding-bottom: 8px;
@@ -127,27 +127,27 @@ nav {
     font-weight: bold;
 }
 
-/* Contenedor de la barra (el fondo gris) */
+
 .stat-bar-bg {
     background-color: #e0e0e0;
     border-radius: 10px;
     height: 15px;
     width: 100%;
     margin: 10px 0;
-    overflow: hidden; /* Para que la carga no se salga de los bordes redondeados */
+    overflow: hidden; 
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* La parte que rellena la barra */
+
 .stat-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, lightgreen, green); /* Degradado rojo Pokédex */
+    background: linear-gradient(90deg, lightgreen, green);
     border-radius: 10px;
-    width: 0%; /* Se controla desde el JS */
-    transition: width 0.8s ease-out; /* Animación suave al cargar */
+    width: 0%; 
+    transition: width 0.8s ease-out;
 }
 
-/* Estilo del texto que acompaña a la barra */
+
 .card p {
     font-weight: bold;
     color: #444;
@@ -156,17 +156,17 @@ nav {
     font-size: 0.9rem;
 }
 
-/* Contenedor principal de la cadena evolutiva */
+
 .evo-container {
     display: flex;
-    align-items: center;      /* Centra verticalmente (flechas y fotos alineadas) */
-    justify-content: center;   /* Centra todo el grupo en el medio de la caja */
-    gap: 15px;                 /* Espacio entre cada evolución */
+    align-items: center;      
+    justify-content: center;   
+    gap: 15px;                 
     padding: 10px 0;
-    flex-wrap: wrap;           /* Por si hay muchas evoluciones (ej. Eevee) */
+    flex-wrap: wrap;           
 }
 
-/* Cada bloque de Pokémon (Imagen + Nombre) */
+
 .evo-item {
     display: flex;
     flex-direction: column;
@@ -176,21 +176,21 @@ nav {
 }
 
 .evo-item:hover {
-    transform: scale(1.1);    /* Pequeño efecto al pasar el ratón */
+    transform: scale(1.1);   
 }
 
-/* El Sprite pequeño y circular */
+
 .evo-sprite {
-    width: 60px;               /* Tamaño pequeño para que no ocupe mucho */
+    width: 60px;               
     height: 60px;
-    background-color: #f0f0f0; /* Fondo gris claro circular */
-    border-radius: 50%;        /* Lo hace redondo */
+    background-color: #f0f0f0; 
+    border-radius: 50%;        
     border: 2px solid #ddd;
     margin-bottom: 5px;
-    object-fit: contain;       /* Asegura que el pokemon no se deforme */
+    object-fit: contain;
 }
 
-/* El nombre debajo del sprite */
+
 .evo-name-label {
     font-size: 0.75rem;
     text-transform: capitalize;
@@ -199,11 +199,11 @@ nav {
     margin: 0;
 }
 
-/* La flecha separadora */
+
 .arrow {
     font-size: 1.2rem;
     color: #bbb;
     font-weight: bold;
-    user-select: none;         /* Evita que se seleccione el texto de la flecha */
-    margin-bottom: 20px;       /* Ajuste visual para que quede centrada con el círculo */
+    user-select: none;         
+    margin-bottom: 20px;      
 }

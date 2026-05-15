@@ -1,4 +1,4 @@
-/* Reset básico */
+
 * {
     margin: 0;
     padding: 0;
@@ -113,7 +113,7 @@ body {
     transform: scale(1.05);
 }
 
-/* 1. Reset básico y contenedor principal */
+
 header {
     display: flex;
     justify-content: space-between;
@@ -124,12 +124,12 @@ header {
 }
 
 nav {
-    flex-grow: 1; /* Hace que el nav ocupe el espacio disponible entre el logo y el final */
+    flex-grow: 1; 
     display: flex;
-    justify-content: center; /* ESTO CENTRA LOS ELEMENTOS HIJOS */
+    justify-content: center; 
 }
 
-/* 2. El logo y el título juntos */
+
 .logo-container {
     width: 30px;
     display: flex;
@@ -146,16 +146,16 @@ nav {
     color: #333;
 }
 
-/* 3. La lista de navegación */
+
 .nav-links {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 30px; /* Espacio entre enlaces */
+    gap: 30px;
 }
 
-/* 4. Estilo de los enlaces */
+
 .nav-links a {
     text-decoration: none;
     color: #666;
@@ -163,7 +163,7 @@ nav {
     transition: color 0.3s ease;
 }
 
-/* Efecto al pasar el ratón */
+
 .nav-links a:hover, .nav-links a.active {
-    color: #e3350d; /* Rojo tipo Pokédex */
+    color: #e3350d; 
 }

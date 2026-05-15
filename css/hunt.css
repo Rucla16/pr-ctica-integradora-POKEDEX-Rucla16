@@ -1,0 +1,52 @@
+.hunt-screen {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../img/hunt_bg.png'); 
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    cursor: url('../img/cursor_lupa.png'), crosshair; 
+}
+
+.instrucciones {
+    position: absolute;
+    top: 20px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    pointer-events: none; 
+}
+
+
+.wild-encounter-card {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px;
+    border: 3px solid #333;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    z-index: 10;
+    width: 180px;
+    animation: spawn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+.pokemon-silhouette {
+    width: 120px;
+    height: 120px;
+    filter: brightness(0); 
+    margin-bottom: 10px;
+    user-select: none;
+    pointer-events: none;
+}
+
+.encounter-text {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    margin: 5px 0;
+    color: #222;
+}

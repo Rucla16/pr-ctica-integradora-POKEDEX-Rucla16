@@ -5,7 +5,6 @@ export const getFavorites = () => {
     return favorites ? JSON.parse(favorites) : [];
 };
 
-
 export const saveFavorite = (pokemonName) => {
     const favorites = getFavorites();
     if (!favorites.includes(pokemonName)) {
