@@ -269,9 +269,53 @@ export const createHuntAlert = (pokemon, x, y) => {
         event.stopPropagation();
 
         db.saveFavorite(pokemon.name);
-        
+
         window.location.href = `battle.html?wildId=${pokemon.id}`;
     });
+
+    return card;
+};
+
+export const createHuntMissAlert = (x, y) => {
+    const card = document.createElement("div");
+    card.classList.add("wild-encounter-card", "miss-card"); 
+
+    
+    const cardWidth = 180;
+    const cardHeight = 100; 
+    let posX = x - cardWidth / 2;
+    let posY = y - cardHeight / 2;
+
+    card.style.left = `${posX}px`;
+    card.style.top = `${posY}px`;
+
+   
+    const title = document.createElement("p");
+    title.classList.add("encounter-text");
+    title.textContent = "¡NADA POR AQUÍ!";
+    title.style.color = "#e74c3c"; 
+
+    
+    const subMsg = document.createElement("p");
+    subMsg.textContent = "Sigue buscando entre la hierba...";
+    subMsg.style.fontSize = "0.75rem";
+    subMsg.style.color = "#666";
+    subMsg.style.margin = "5px 0 0 0";
+
+    card.append(title, subMsg);
+
+    
+    card.addEventListener("click", (e) => {
+        e.stopPropagation();
+        card.remove();
+    });
+
+    
+    setTimeout(() => {
+        if (card.parentNode) {
+            card.remove();
+        }
+    }, 1500);
 
     return card;
 };

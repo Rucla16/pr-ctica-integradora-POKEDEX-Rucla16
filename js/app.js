@@ -68,18 +68,17 @@ export const initHunt = () => {
     const huntZone = document.getElementById("hunt-zone");
 
     huntZone.addEventListener("click", async (e) => {
-        
-        if (document.querySelector(".wild-encounter-card")) {
-            
-            document.querySelector(".wild-encounter-card").remove();
+        const activeCard = document.querySelector(".wild-encounter-card");
+        if (activeCard) {
+            activeCard.remove();
             return;
         }
 
     
         const luck = Math.random();
         if (luck < 0.6) { 
-            console.log("No has encontrado nada esta vez...");
-        
+            const missCard = UI.createHuntMissAlert(e.clientX, e.clientY);
+            huntZone.appendChild(missCard);
             return; 
         }
 
