@@ -272,6 +272,16 @@ export const createHuntAlert = (pokemon, x, y) => {
     });
 
     return card;
+
+    card.addEventListener("click", (event) => {
+        event.stopPropagation();
+        
+        
+        sessionStorage.setItem("pokemonEncontrado", pokemon.id);
+        
+        
+        window.location.href = `battle.html?wildId=${pokemon.id}`;
+    });
 };
 
 export const createHuntMissAlert = (x, y) => {
@@ -316,4 +326,109 @@ export const createHuntMissAlert = (x, y) => {
     }, 1500);
 
     return card;
+};
+
+
+
+export const setupBattleField = (wild, player, wildMaxHP, playerMaxHP) => {
+    // Nombres y stats
+    document.getElementById("wild-name").textContent = wild.name;
+    document.getElementById("player-name").textContent = player.name;
+    
+    document.getElementById("wild-hp-text").textContent = `${wildMaxHP}/${wildMaxHP}`;
+    document.getElementById("player-hp-text").textContent = `${playerMaxHP}/${playerMaxHP}`;
+
+    
+    document.getElementById("wild-img").src = wild.sprites.front_default;
+    document.getElementById("player-img").src = player.sprites.back_default || player.sprites.front_default;
+    
+    document.getElementById("battle-text").textContent = `¡Un ${wild.name.toUpperCase()} salvaje apareció! ¡Adelante ${player.name.toUpperCase()}!`;
+};
+
+export const createAttackButtons = (moves, onClickCallback) => {
+    const panel = document.getElementById("actions-panel");
+    panel.textContent = ""; 
+
+    moves.forEach(m => {
+        const btn = document.createElement("button");
+        btn.classList.add("btn-attack");
+        btn.textContent = m.move.name.replace("-", " ");
+        btn.addEventListener("click", () => onClickCallback(m.move.name));
+        panel.appendChild(btn);
+    });
+};
+
+export const updateBattleLog = (text) => {
+    document.getElementById("battle-text").textContent = text;
+};
+
+export const toggleAttackButtons = (disable) => {
+    document.querySelectorAll(".btn-attack").forEach(btn => btn.disabled = disable);
+};
+
+export const updateHPBar = (side, currentHP, maxHP) => {
+    const percentage = (currentHP / maxHP) * 100;
+    const bar = document.getElementById(`${side}-hp`);
+    const text = document.getElementById(`${side}-hp-text`);
+
+    bar.style.width = `${percentage}%`;
+    text.textContent = `${currentHP}/${maxHP}`;
+
+    
+    if (percentage > 50) {
+        bar.style.backgroundColor = "#2ecc71";
+    } else if (percentage > 20) {
+        bar.style.backgroundColor = "#f1c40f";
+    } else {
+        bar.style.backgroundColor = "#e74c3c";
+    }
+};
+
+export const renderTeamSelector = (favorites, wildId) => {
+    const arena = document.getElementById("battle-arena");
+    arena.textContent = ""; 
+
+    
+    const selectorWrapper = document.createElement("div");
+    selectorWrapper.classList.add("selector-wrapper");
+
+    const title = document.createElement("h2");
+    title.textContent = favorites.length > 0 ? "ELIGE TU POKÉMON PARA COMBATIR" : "¡NO TIENES POKÉMON! ELIGE UN INICIAL";
+    title.classList.add("selector-title");
+
+    const grid = document.createElement("div");
+    grid.classList.add("selector-grid");
+
+    
+    const listToRender = favorites.length > 0 ? favorites : ["bulbasaur", "charmander", "squirtle"];
+
+    listToRender.forEach(async (name) => {
+        const choiceCard = document.createElement("div");
+        choiceCard.classList.add("choice-card");
+
+        
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        const data = await response.json();
+
+        const img = document.createElement("img");
+        img.src = data.sprites.front_default;
+        img.alt = name;
+        img.classList.add("choice-img");
+
+        const pName = document.createElement("p");
+        pName.textContent = name.toUpperCase();
+        pName.classList.add("choice-name");
+
+        choiceCard.append(img, pName);
+
+        
+        choiceCard.addEventListener("click", () => {
+            window.location.href = `battle.html?wildId=${wildId}&playerId=${data.id}`;
+        });
+
+        grid.appendChild(choiceCard);
+    });
+
+    selectorWrapper.append(title, grid);
+    arena.appendChild(selectorWrapper);
 };

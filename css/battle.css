@@ -163,3 +163,65 @@ nav {
     background: #333;
     color: white;
 }
+
+
+.selector-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.95);
+    border: 4px solid #333;
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 100;
+}
+
+.selector-title {
+    font-size: 1.3rem;
+    margin-bottom: 25px;
+    color: #333;
+    text-shadow: none;
+}
+
+.selector-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.choice-card {
+    background: #f8f9fa;
+    border: 3px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    width: 130px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.choice-card:hover {
+    border-color: #ff3e3e;
+    background: #fff;
+    transform: translateY(-5px);
+}
+
+.choice-img {
+    width: 90px;
+    height: 90px;
+}
+
+.choice-name {
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #444;
+}

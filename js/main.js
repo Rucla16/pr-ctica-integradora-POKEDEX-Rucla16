@@ -14,5 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
         App.initFavorites();
     } else if (path.includes("hunt.html")) {
         App.initHunt();
+    } else if (path.includes("battle.html")) {
+        const params = new URLSearchParams(window.location.search);
+        const wildId = params.get("wildId");
+        const playerId = params.get("playerId");
+        
+        if (wildId) {
+
+            App.initBattle(wildId, playerId); 
+        }
     }
 });
