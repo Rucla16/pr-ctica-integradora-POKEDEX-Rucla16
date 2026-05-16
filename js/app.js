@@ -55,7 +55,7 @@ export const initDetails = async (id) => {
 
 
 export const initFavorites = () => {
-    const container = document.getElementById("MyPokemons");
+    const container = document.getElementById("mainPkmGrid");
     const favorites = db.getFavorites();
     favorites.forEach(async (name) => {
         const pokemon = await API.getPokemon(name);

@@ -173,19 +173,21 @@ nav {
     background: rgba(255, 255, 255, 0.95);
     border: 4px solid #333;
     border-radius: 15px;
-    padding: 30px;
+    padding: 15px; 
     text-align: center;
-    max-width: 600px;
+    max-width: 500px;
     width: 90%;
+    max-height: 85vh; 
+    overflow-y: auto;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     z-index: 100;
+    box-sizing: border-box;
 }
 
 .selector-title {
-    font-size: 1.3rem;
-    margin-bottom: 25px;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
     color: #333;
-    text-shadow: none;
 }
 
 .selector-grid {
@@ -199,8 +201,8 @@ nav {
     background: #f8f9fa;
     border: 3px solid #ccc;
     border-radius: 10px;
-    padding: 15px;
-    width: 130px;
+    padding: 8px;
+    width: 105px; 
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
@@ -215,13 +217,13 @@ nav {
 }
 
 .choice-img {
-    width: 90px;
-    height: 90px;
+    width: 65px; 
+    height: 65px;
 }
 
 .choice-name {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: bold;
-    margin-top: 10px;
-    color: #444;
+    margin-top: 5px;
+    margin-bottom: 0;
 }

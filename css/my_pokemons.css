@@ -51,3 +51,70 @@ nav {
 .nav-links a:hover, .nav-links a.active {
     color: #e3350d; 
 }
+
+#MyPokemons {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.page-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.pokemon-grid {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-left: 200px;
+    margin-right: 200px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    
+}  
+
+
+
+.pokemon-block {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 15px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0.10,0.15,0.20);
+}
+
+.pokemon-block:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 0 2px 8px rgba(0,0.10,0.15,0.20);
+}
+
+
+
+.types-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 8px;
+
+}
+
+.type-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.75rem;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
