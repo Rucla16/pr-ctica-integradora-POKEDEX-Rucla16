@@ -37,9 +37,9 @@ Tengo un CSS para cada HTML, los he usado para darles el estilo visual a cada p�
 Tengo 5 archivos js en total: main, app, api, storage y ui.
 - **main.js** es el primero que se ejecuta al abrir la PokeDex en el navegador, básicamente indica al programa donde se encuentra el usuario para ejecutar el código correspondiente y que la página funcione adecuadamente.
 - **app.js** es el que contiene la lógica de cada sección, aquí es donde tengo los inicializadores de cada página (initHome, initHunt, initBattle, initFavorites, etc.).
-· En Hunt: Controla cuándo aparece un Pokémon en la hierba al azar.
-· En Battle: Contiene todo el motor de turnos del combate (calcula de forma aleatoria el daño de los ataques, resta los puntos de vida, procesa la IA del rival, decide quién gana o pierde, etc).
-· En Favorites/Details: Solicita la información necesaria y le manda las órdenes a ui.js para que lo pinte todo en su sitio.
+- **En Hunt**: Controla cuándo aparece un Pokémon en la hierba al azar.
+- **En Battle**: Contiene todo el motor de turnos del combate (calcula de forma aleatoria el daño de los ataques, resta los puntos de vida, procesa la IA del rival, decide quién gana o pierde, etc).
+- **En my_pokemons/Details**: Solicita la información necesaria y le manda las órdenes a ui.js para que lo pinte todo en su sitio.
 - **api.js** Su función principal: Se conecta a la base de datos pública de Pokémon (PokéAPI) para descargar la información de cualquier Pokemon, contiene funciones con fetch que le piden a la API los datos de un Pokémon por su nombre o ID (sus imágenes, estadísticas base, tipos y lista de movimientos disponibles). 
 Devuelve esa información en formato de objeto ordenado para que el resto del juego pueda trabajar con ella.
 - **storage.js** Su función principal: Gestiona el almacenamiento local en el navegador utilizando localStorage.
