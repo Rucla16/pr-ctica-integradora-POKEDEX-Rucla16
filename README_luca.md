@@ -42,9 +42,7 @@ Tengo 5 archivos js en total: main, app, api, storage y ui.
 - **En my_pokemons/Details**: Solicita la información necesaria y le manda las órdenes a ui.js para que lo pinte todo en su sitio.
 - **api.js** Su función principal: Se conecta a la base de datos pública de Pokémon (PokéAPI) para descargar la información de cualquier Pokemon, contiene funciones con fetch que le piden a la API los datos de un Pokémon por su nombre o ID (sus imágenes, estadísticas base, tipos y lista de movimientos disponibles). 
 Devuelve esa información en formato de objeto ordenado para que el resto del juego pueda trabajar con ella.
-- **storage.js** Su función principal: Gestiona el almacenamiento local en el navegador utilizando localStorage.
-
-Qué hace exactamente: Guarda y lee la lista de los Pokémon (my_pokemons) que vas capturando en hunt. Cuando derrotas a un Pokémon en combate, lo registra en el disco duro del navegador para que no se borre al cerrar la pestaña o refrescar la página.
+- **storage.js** Gestiona el almacenamiento local en el navegador utilizando localStorage, guarda y lee la lista de los Pokémon (my_pokemons) que vas capturando en hunt. Cuando derrotas a un Pokémon en combate, lo registra en el disco duro del navegador para que no se borre al cerrar la pestaña o refrescar la página.
 - **ui.js** Manipula el DOM del navegador creando elementos HTML dinámicos desde cero utilizando document.createElement, construye las tarjetas de los Pokémon con sus colores correspondientes según el tipo en el Inicio y en my_pokemons.
 Genera el menú flotante interactivo para elegir qué Pokémon enviar a combatir, modifica las barras de salud (HP) en tiempo real en la pantalla de batalla y pinta los textos del registro de combate.
 Monta las tablas de ataques y los gráficos de barras en la sección de detalles de la Pokédex.
