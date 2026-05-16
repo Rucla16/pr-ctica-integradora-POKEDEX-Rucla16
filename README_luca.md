@@ -12,7 +12,7 @@ En este proyecto tenía que crear una PokeDex Web utilizando una estructura de 5
 
 ## 2. HTML
 Como he dicho  tengo 5 archivos **HTML**, que son los siguientes: index.html (este corresponde a la página de inicio de la Pokedex), details.html (este pertenece a la página de detalles de cada Pokemon), my_pokemons.html (que corresponde a la página de los Pokemons que se guardan despues de cazarlos), hunt.html (este pertenece a la sección de caza Pokemon) y battle.html (pertenece a la sección de batallas Pokemon).
-Los 5 archivos comparten el mismo encabezado para permitir el acceso de una página a la otra. El index tiene un buscador funcional para poder buscar cualquiera de los 151 primeros Pokemons, tambien los carga de forma automática en pantalla.
+Los 5 archivos comparten el mismo encabezado para permitir el acceso de una página a la otra. El index tiene un buscador funcional para poder buscar cualquiera de los 151 primeros Pokemons, tambien los carga en pantalla.
 El details tiene 5 contenedores, uno para la imagen en alta resolución de cada Pokemón con su nombre y tipos correspondientes, otro para la media de poder del Pokemón, otro para sus habilidades, otro para su cadena evoutiva y el último para mostrar los 10 primeros movimientos de cada Pokemon.
 El my_pokemons muestra todos los Pokemon que se te van guardando automáticamente después de derrotarlos en combate.
 El hunt muestra una pantalla en la que puedes hacer click en cualquier lugar de esta para intentar encontrar un Pokemon salvaje.
