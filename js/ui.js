@@ -339,22 +339,25 @@ export class UI {
         document.getElementById("player-hp-text").textContent = `${playerMaxHP}/${playerMaxHP}`;
 
         
-        document.getElementById("wild-img").src = wild.sprites.front_default;
-        document.getElementById("player-img").src = player.sprites.back_default || player.sprites.front_default;
+        document.getElementById("wild-img").src = wild.spriteFront;
+        document.getElementById("player-img").src = player.spriteBack;
         
         document.getElementById("battle-text").textContent = `¡Un ${wild.name.toUpperCase()} salvaje apareció! ¡Adelante ${player.name.toUpperCase()}!`;
     };
 
-    static createAttackButtons = (moves, onClickCallback) => {
+    static createAttackButtons = (moves, handlePlayerTurn) => {
         const panel = document.getElementById("actions-panel");
         panel.textContent = ""; 
 
-        moves.forEach(m => {
-            const btn = document.createElement("button");
-            btn.classList.add("btn-attack");
-            btn.textContent = m.move.name.replace("-", " ");
-            btn.addEventListener("click", () => onClickCallback(m.move.name));
-            panel.appendChild(btn);
+        moves.forEach(moveName => { 
+            const button = document.createElement("button");
+            button.className = "attack-btn";
+            
+            button.textContent = moveName.replace("-", " ").toUpperCase();
+            
+            button.addEventListener("click", () => handlePlayerTurn(moveName));
+            
+            panel.appendChild(button);
         });
     };
 

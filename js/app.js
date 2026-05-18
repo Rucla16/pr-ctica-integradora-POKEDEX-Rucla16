@@ -1,6 +1,7 @@
 import { API } from './api.js';
 import { UI } from './ui.js';
 import { Storage } from './storage.js';
+import { Pokemon, Battle } from './models.js';
 
 const TYPE_COLORS = {
     grass: "#78C850", fire: "#F08030", water: "#6890F0", bug: "#A8B820",
@@ -9,46 +10,6 @@ const TYPE_COLORS = {
     ghost: "#705898", ice: "#98D8D8", dragon: "#7038F8", flying: "#A890F0",
     steel: "#B8B8D0", dark: "#705848"
 };
-
-class BattleState {
-    constructor(wildPokemon, playerPokemon) {
-        this.wild = wildPokemon;
-        this.player = playerPokemon;
-
-        this.wildMaxHP = wildPokemon.stats[0].base_stat;
-        this.wildHP = this.wildMaxHP;
-
-        this.playerMaxHP = playerPokemon.stats[0].base_stat;
-        this.playerHP = this.playerMaxHP;
-
-        this.isPlayerTurn = true;
-    }
-
-    get isBattleOver() {
-        return this.wildHP <= 0 || this.playerHP <= 0;
-    }
-
-    playerAttack(moveName) {
-        if (!this.isPlayerTurn || this.isBattleOver) return null;
-        this.isPlayerTurn = false;
-
-        const damage = Math.floor(Math.random() * 15) + 5;
-        this.wildHP = Math.max(0, this.wildHP - damage);
-        return damage;
-    }
-
-    enemyAttack() {
-        if (this.isBattleOver) return null;
-
-        const availableMoves = this.wild.moves.slice(0, 4);
-        const randomMove = availableMoves[Math.floor(Math.random() * availableMoves.length)].move.name;
-        const damage = Math.floor(Math.random() * 12) + 4;
-
-        this.playerHP = Math.max(0, this.playerHP - damage);
-        return { moveName: randomMove, damage };
-    }
-}
-
 
 export class App {
 
@@ -154,63 +115,73 @@ export class App {
         });
     }
 
-
     static async initBattle(wildId, playerId = null) {
         try {
-            const wildPokemon = await API.getPokemon(wildId);
+            const wildApiData = await API.getPokemon(wildId);
             const favorites = Storage.getFavorites();
 
-            
             if (!playerId) {
                 UI.renderTeamSelector(favorites, wildId);
                 return;
             }
 
-            const playerPokemon = await API.getPokemon(playerId);
+            const playerApiData = await API.getPokemon(playerId);
             
+        
+            const miAliado = new Pokemon(playerApiData);
+            const rivalSalvaje = new Pokemon(wildApiData);
             
-            const combat = new BattleState(wildPokemon, playerPokemon);
+        
+            const combat = new Battle(miAliado, rivalSalvaje);
 
-            UI.setupBattleField(wildPokemon, playerPokemon, combat.wildMaxHP, combat.playerMaxHP);
-
             
+            UI.setupBattleField(combat.wild, combat.player, combat.wild.maxHp, combat.player.maxHp);
+
+       
             const handleEnemyTurn = () => {
-                const action = combat.enemyAttack();
+                
+                const action = combat.executeEnemyTurn();
                 if (!action) return;
 
-                UI.updateBattleLog(`¡${combat.wild.name.toUpperCase()} salvaje usó ${action.moveName.replace("-", " ")} y causó ${action.damage} de daño!`);
-                UI.updateHPBar("player", combat.playerHP, combat.playerMaxHP);
+                
+                UI.updateBattleLog(`¡${combat.wild.name} salvaje usó ${action.moveName.replace("-", " ")} y causó ${action.damage} de daño!`);
+                UI.updateHPBar("player", combat.player.currentHp, combat.player.maxHp);
 
-                if (combat.playerHP <= 0) {
+                
+                if (combat.player.isFainted) {
                     setTimeout(() => {
-                        UI.updateBattleLog(`¡Tu ${combat.player.name.toUpperCase()} se ha debilitado! Fin de la batalla.`);
+                        UI.updateBattleLog(`¡Tu ${combat.player.name} se ha debilitado! Fin de la batalla.`);
                         setTimeout(() => window.location.href = "hunt.html", 2500);
                     }, 1500);
                     return;
                 }
 
                 setTimeout(() => {
-                    UI.updateBattleLog(`¿Qué debería hacer ${combat.player.name.toUpperCase()}?`);
+                    UI.updateBattleLog(`¿Qué ataque debería usar ${combat.player.name}?`);
                     UI.toggleAttackButtons(false);
-                    combat.isPlayerTurn = true;
+                    
                 }, 1500);
             };
 
+            
             const handlePlayerTurn = async (moveName) => {
-                const damage = combat.playerAttack(moveName);
+                
+                const damage = combat.executePlayerTurn(moveName);
                 if (damage === null) return;
 
                 UI.toggleAttackButtons(true);
-                UI.updateBattleLog(`¡${combat.player.name.toUpperCase()} usó ${moveName.replace("-", " ")} y causó ${damage} de daño!`);
-                UI.updateHPBar("wild", combat.wildHP, combat.wildMaxHP);
+                UI.updateBattleLog(`¡${combat.player.name} usó ${moveName.replace("-", " ")} y causó ${damage} de daño!`);
+                UI.updateHPBar("wild", combat.wild.currentHp, combat.wild.maxHp);
 
-                if (combat.wildHP <= 0) {
+                
+                if (combat.wild.isFainted) {
                     setTimeout(() => {
-                        UI.updateBattleLog(`¡${combat.wild.name.toUpperCase()} ha sido debilitado!`);
-                        Storage.saveFavorite(combat.wild.name);
+                        UI.updateBattleLog(`¡${combat.wild.name} ha sido debilitado!`);
+                        
+                        Storage.saveFavorite(combat.wild.name.toLowerCase());
                         
                         setTimeout(() => {
-                            alert(`¡Has capturado a ${combat.wild.name.toUpperCase()}! Registrado en My Pokemons.`);
+                            alert(`¡Has capturado a ${combat.wild.name}! Registrado en My Pokemons.`);
                             window.location.href = "my_pokemons.html";
                         }, 2000);
                     }, 1500);
@@ -220,9 +191,8 @@ export class App {
                 setTimeout(handleEnemyTurn, 1500);
             };
 
-            
-            const playerMoves = playerPokemon.moves.slice(0, 4);
-            UI.createAttackButtons(playerMoves, handlePlayerTurn);
+     
+            UI.createAttackButtons(combat.player.moves, handlePlayerTurn);
 
         } catch (error) {
             console.error("Error iniciando la batalla:", error);
