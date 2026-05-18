@@ -34,7 +34,7 @@ Tengo un CSS para cada HTML, los he usado para darles el estilo visual a cada p�
 ---
 
 ### 4. JavaScript
-Tengo 5 archivos js en total: main, app, api, storage y ui.
+Tengo 6 archivos js en total: main, app, api, storage, models y ui.
 - **main.js** es el primero que se ejecuta al abrir la PokeDex en el navegador, básicamente indica al programa donde se encuentra el usuario para ejecutar el código correspondiente y que la página funcione adecuadamente.
 - **app.js** es el que contiene la lógica de cada sección, aquí es donde tengo los inicializadores de cada página (initHome, initHunt, initBattle, initFavorites, etc.).
 - **En Hunt**: Controla cuándo aparece un Pokémon en la hierba al azar.
@@ -43,6 +43,7 @@ Tengo 5 archivos js en total: main, app, api, storage y ui.
 - **api.js** Su función principal: Se conecta a la base de datos pública de Pokémon (PokéAPI) para descargar la información de cualquier Pokemon, contiene funciones con fetch que le piden a la API los datos de un Pokémon por su nombre o ID (sus imágenes, estadísticas base, tipos y lista de movimientos disponibles). 
 Devuelve esa información en formato de objeto ordenado para que el resto del juego pueda trabajar con ella.
 - **storage.js** Gestiona el almacenamiento local en el navegador utilizando localStorage, guarda y lee la lista de los Pokémon (my_pokemons) que vas capturando en hunt. Cuando derrotas a un Pokémon en combate, lo registra en el disco duro del navegador para que no se borre al cerrar la pestaña o refrescar la página.
+- **models.js** contiene 2 clases Pokemon y Battle que gestionan todos los datos de los Pokemon y de la parte de battle.
 - **ui.js** Manipula el DOM del navegador creando elementos HTML dinámicos desde cero utilizando document.createElement, construye las tarjetas de los Pokémon con sus colores correspondientes según el tipo en el Inicio y en my_pokemons.
 Genera el menú flotante interactivo para elegir qué Pokémon enviar a combatir, modifica las barras de salud (HP) en tiempo real en la pantalla de batalla y pinta los textos del registro de combate.
 Monta las tablas de ataques y los gráficos de barras en la sección de detalles de la Pokédex.
