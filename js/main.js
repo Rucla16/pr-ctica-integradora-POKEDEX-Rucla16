@@ -1,4 +1,4 @@
-import * as App from './app.js';
+import { App } from './app.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const path = window.location.pathname;

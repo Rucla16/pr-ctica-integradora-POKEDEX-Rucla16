@@ -59,7 +59,7 @@ nav {
     background-size: cover;
     background-position: center;
     position: relative;
-    cursor: url('../img/cursor_lupa.png'), crosshair; 
+    cursor: pointer;
 }
 
 .instrucciones {
